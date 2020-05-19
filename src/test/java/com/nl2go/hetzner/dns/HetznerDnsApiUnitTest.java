@@ -38,6 +38,19 @@ public class HetznerDnsApiUnitTest {
     }
 
     @Test
+    public void GetZonesReturnsEmptyList() {
+
+        stubFor(get(urlEqualTo("/zones"))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withBodyFile("zones_empty.json")));
+
+        List<Zone> zones = hetznerDNSApiService.getZones();
+
+        assertEquals(0, zones.size());
+    }
+
+    @Test
     public void GetZonesReturnsListGreaterThanZero() {
 
         stubFor(get(urlEqualTo("/zones"))
