@@ -1,0 +1,4 @@
+hetzner-dns-api:
+  token: ikfCfOlEbhkTsmM8g7Ix
+  #url: https://dns.hetzner.com/api/v1/
+  url: http://localhost:9999

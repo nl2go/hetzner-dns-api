@@ -1,0 +1,7 @@
+/.vscode/
+/.idea/
+/.settings/
+/.project
+/.classpath
+/hetzner-dns-api.iml
+/target/

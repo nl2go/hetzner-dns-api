@@ -1,0 +1,39 @@
+{
+  "zone": {
+    "created": "2020-04-07 01:24:02 +0000 UTC",
+    "id": "AhywbURnqpPifOAZww91",
+    "is_secondary_dns": false,
+    "legacy_dns_host": "",
+    "legacy_ns": [
+      "ns1.first-ns.de.",
+      "robotns3.second-ns.com.",
+      "robotns2.second-ns.de."
+    ],
+    "modified": "2020-04-07 01:24:02 +0000 UTC",
+    "name": "hetzner-dns-test.de",
+    "ns": [
+      "hydrogen.ns.hetzner.com",
+      "oxygen.ns.hetzner.com",
+      "helium.ns.hetzner.de"
+    ],
+    "owner": "",
+    "paused": false,
+    "permission": "",
+    "project": "",
+    "records_count": 12,
+    "registrar": "",
+    "status": "verified",
+    "ttl": 86400,
+    "txt_verification": {
+      "name": "",
+      "token": ""
+    },
+    "verified": "2020-04-07 01:54:41.826394001 +0000 UTC m=+673.952766299",
+    "zone_type": {
+      "description": "",
+      "id": "",
+      "name": "",
+      "prices": null
+    }
+  }
+}

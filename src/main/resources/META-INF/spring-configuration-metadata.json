@@ -1,0 +1,13 @@
+{"properties": [
+  {
+    "name": "hetzner-dns-api.url",
+    "type": "java.lang.String",
+    "description": "The base url of the hetzner-dns-api client.",
+    "defaultValue" : "https://dns.hetzner.com/api/v1/"
+  },
+  {
+    "name": "hetzner-dns-api.token",
+    "type": "java.lang.String",
+    "description": "Auth-API-Token of the hetzner-dns-api client."
+  }
+]}
