@@ -1,5 +1,7 @@
 # hetzner-dns-api: A Java library for the Hetzner DNS API
 
+[![Build status](https://travis-ci.com/nl2go/hetzner-dns-api.svg?branch=master)](https://travis-ci.com/nl2go/hetzner-dns-api)
+
 hetzner-dns-api is a Java library for the [Hetzner DNS API](https://dns.hetzner.com/api-docs/) using OpenFeign.
 
 ## Example
