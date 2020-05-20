@@ -83,4 +83,18 @@ public class HetznerDnsApiUnitTest {
         assertEquals(3, zone.getLegacyNs().size());
         assertEquals(12, zone.getRecordsCount());
     }
+
+    @Test
+    public void GetZoneWithIdReturns404WhenZoneDoesNotExist() {
+
+        String notExistingZoneId = "DoesNotExist";
+
+        stubFor(get(urlEqualTo(format("/zones/{0}", notExistingZoneId)))
+                .withHeader("Auth-API-Token", equalTo(authApiToken))
+                .willReturn(aResponse().withStatus(404)));
+
+        Zone zone = hetznerDNSApiService.getZoneById(notExistingZoneId);
+
+        assertNull(zone);
+    }
 }

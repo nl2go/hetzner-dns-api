@@ -19,7 +19,7 @@ public class ClientConfiguration {
 
     @Bean
     public ErrorDecoder errorDecoder() {
-        return new ErrorDecoder.Default();
+        return new CustomErrorDecoder();
     }
 
     @Bean

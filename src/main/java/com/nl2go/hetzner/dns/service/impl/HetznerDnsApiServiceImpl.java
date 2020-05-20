@@ -18,13 +18,25 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
 
     @Override
     public List<Zone> getZones() {
-        GetZonesResponse zonesResponse = hetznerDnsApiClient.getZones();
+        GetZonesResponse zonesResponse = new GetZonesResponse();
+        GetZonesResponse zonesResponseResult = hetznerDnsApiClient.getZones();
+
+        if (zonesResponseResult != null) {
+            zonesResponse = zonesResponseResult;
+        }
+
         return zonesResponse.getZones();
     }
 
     @Override
     public Zone getZoneById(String id) {
-        GetZoneResponse zoneResponse = hetznerDnsApiClient.getZoneById(id);
+        GetZoneResponse zoneResponse = new GetZoneResponse();
+        GetZoneResponse zoneResponseResult = hetznerDnsApiClient.getZoneById(id);
+
+        if (zoneResponseResult != null) {
+            zoneResponse = zoneResponseResult;
+        }
+
         return zoneResponse.getZone();
     }
 }
