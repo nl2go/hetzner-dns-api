@@ -8,15 +8,13 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static java.text.MessageFormat.format;
 import static org.junit.Assert.*;
 
@@ -25,6 +23,9 @@ import static org.junit.Assert.*;
 public class HetznerDnsApiUnitTest {
 
     private static final String ZONEID = "AhywbURnqpPifOAZww91";
+
+    @Value("${hetzner-dns-api.token}")
+    private String authApiToken;
 
     @Autowired
     private HetznerDnsApiService hetznerDNSApiService;
@@ -41,6 +42,7 @@ public class HetznerDnsApiUnitTest {
     public void GetZonesReturnsEmptyList() {
 
         stubFor(get(urlEqualTo("/zones"))
+                .withHeader("Auth-API-Token", equalTo(authApiToken))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("zones_empty.json")));
@@ -54,6 +56,7 @@ public class HetznerDnsApiUnitTest {
     public void GetZonesReturnsListGreaterThanZero() {
 
         stubFor(get(urlEqualTo("/zones"))
+                .withHeader("Auth-API-Token", equalTo(authApiToken))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("zones.json")));
@@ -67,6 +70,7 @@ public class HetznerDnsApiUnitTest {
     public void GetZoneWithIdReturnsZoneWhenZoneExist() {
 
         stubFor(get(urlEqualTo(format("/zones/{0}", ZONEID)))
+                .withHeader("Auth-API-Token", equalTo(authApiToken))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("zone.json")));

@@ -7,6 +7,7 @@ hetzner-dns-api is a Java library for the [Hetzner DNS API](https://dns.hetzner.
 ```java
 package com.custom.app;
 
+import com.nl2go.hetzner.dns.model.Zone;
 import com.nl2go.hetzner.dns.service.HetznerDnsApiService;
 
 public class CustomApp {
@@ -18,6 +19,14 @@ public class CustomApp {
         List<Zone> zones = hetznerDNSApiService.getZones();
     }
 }
+```
+
+Required configuration:
+
+```yaml
+hetzner-dns-api:
+  token: YourToken
+  url: https://dns.hetzner.com/api/v1/
 ```
 
 
