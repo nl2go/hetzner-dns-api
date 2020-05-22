@@ -6,8 +6,6 @@ import com.nl2go.hetzner.dns.service.HetznerDnsApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
 
@@ -15,15 +13,8 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
     private HetznerDnsApiClient hetznerDnsApiClient;
 
     @Override
-    public List<Zone> getZones() {
-        ZonesResponse zonesResponse = new ZonesResponse();
-        ZonesResponse zonesResponseResult = hetznerDnsApiClient.getZones();
-
-        if (zonesResponseResult != null) {
-            zonesResponse = zonesResponseResult;
-        }
-
-        return zonesResponse.getZones();
+    public ZonesResponse getZonesResponse() {
+        return hetznerDnsApiClient.getZones();
     }
 
     @Override
@@ -39,12 +30,12 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
     }
 
     @Override
-    public ZoneResponse postZoneById(ZoneInput input, String zoneId) {
+    public Zone postZoneById(ZoneInput input, String zoneId) {
         return null;
     }
 
     @Override
-    public ZoneResponse putZoneById(ZoneInput input, String zoneId) {
+    public Zone putZoneById(ZoneInput input, String zoneId) {
         return null;
     }
 
@@ -54,22 +45,22 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
     }
 
     @Override
-    public RecordsResponse getRecords() {
+    public RecordsResponse getRecordsResponse() {
+        return hetznerDnsApiClient.getRecords();
+    }
+
+    @Override
+    public Record getRecordById(String recordId) {
         return null;
     }
 
     @Override
-    public RecordResponse getRecordById(String recordId) {
+    public Record postRecordById(RecordInput input, String recordId) {
         return null;
     }
 
     @Override
-    public RecordResponse postRecordById(RecordInput input, String recordId) {
-        return null;
-    }
-
-    @Override
-    public RecordResponse putRecordById(RecordInput input, String recordId) {
+    public Record putRecordById(RecordInput input, String recordId) {
         return null;
     }
 

@@ -1,6 +1,7 @@
 package com.nl2go.hetzner.dns;
 
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
+import com.nl2go.hetzner.dns.model.Record;
 import com.nl2go.hetzner.dns.model.Zone;
 import com.nl2go.hetzner.dns.service.HetznerDnsApiService;
 import org.junit.Before;
@@ -17,11 +18,12 @@ import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static java.text.MessageFormat.format;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HetznerDnsApiZonesTest {
+public class HetznerDnsApiRecordsTest {
 
     private static final String ZONEID = "AhywbURnqpPifOAZww91";
 
@@ -40,49 +42,17 @@ public class HetznerDnsApiZonesTest {
     }
 
     @Test
-    public void GetZonesReturnsEmptyList() {
+    public void GetRecordsReturnsEmptyList() {
 
-        stubFor(get(urlEqualTo("/zones"))
+        stubFor(get(urlEqualTo("/records"))
                 .withHeader("Auth-API-Token", equalTo(authApiToken))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
-                        .withBodyFile("zones_empty.json")));
+                        .withBodyFile("records_empty.json")));
 
-        List<Zone> zones = hetznerDNSApiService.getZonesResponse().getZones();
+        List<Record> records = hetznerDNSApiService.getRecordsResponse().getRecords();
 
-        assertEquals(0, zones.size());
-    }
-
-    @Test
-    public void GetZonesReturnsListGreaterThanZero() {
-
-        stubFor(get(urlEqualTo("/zones"))
-                .withHeader("Auth-API-Token", equalTo(authApiToken))
-                .willReturn(aResponse()
-                        .withHeader("Content-Type", "application/json")
-                        .withBodyFile("zones.json")));
-
-        List<Zone> zones = hetznerDNSApiService.getZonesResponse().getZones();
-
-        assertEquals(2, zones.size());
-    }
-
-    @Test
-    public void GetZoneWithIdReturnsZoneWhenZoneExist() {
-
-        stubFor(get(urlEqualTo(format("/zones/{0}", ZONEID)))
-                .withHeader("Auth-API-Token", equalTo(authApiToken))
-                .willReturn(aResponse()
-                        .withHeader("Content-Type", "application/json")
-                        .withBodyFile("zone.json")));
-
-        Zone zone = hetznerDNSApiService.getZoneById(ZONEID);
-
-        assertNotNull(zone);
-
-        assertEquals(ZONEID, zone.getId());
-        assertEquals(3, zone.getLegacyNs().size());
-        assertEquals(12, zone.getRecordsCount());
+        assertEquals(0, records.size());
     }
 
     @Test
@@ -90,7 +60,7 @@ public class HetznerDnsApiZonesTest {
 
         String notExistingZoneId = "DoesNotExist";
 
-        stubFor(get(urlEqualTo(format("/zones/{0}", notExistingZoneId)))
+        stubFor(get(urlEqualTo(format("/records/{0}", notExistingZoneId)))
                 .withHeader("Auth-API-Token", equalTo(authApiToken))
                 .willReturn(aResponse().withStatus(HttpStatus.NOT_FOUND.value())));
 

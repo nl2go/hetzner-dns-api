@@ -2,27 +2,25 @@ package com.nl2go.hetzner.dns.service;
 
 import com.nl2go.hetzner.dns.model.*;
 
-import java.util.List;
-
 public interface HetznerDnsApiService {
 
-    List<Zone> getZones();
+    ZonesResponse getZonesResponse();
 
     Zone getZoneById(String zoneId);
 
-    ZoneResponse postZoneById(ZoneInput input, String zoneId);
+    Zone postZoneById(ZoneInput input, String zoneId);
 
-    ZoneResponse putZoneById(ZoneInput input, String zoneId);
+    Zone putZoneById(ZoneInput input, String zoneId);
 
     void deleteZoneById(String zoneId);
 
-    RecordsResponse getRecords();
+    RecordsResponse getRecordsResponse();
 
-    RecordResponse getRecordById(String recordId);
+    Record getRecordById(String recordId);
 
-    RecordResponse postRecordById(RecordInput input, String recordId);
+    Record postRecordById(RecordInput input, String recordId);
 
-    RecordResponse putRecordById(RecordInput input, String recordId);
+    Record putRecordById(RecordInput input, String recordId);
 
     void deleteRecordById(String recordId);
 }
