@@ -1,6 +1,6 @@
 package com.nl2go.hetzner.dns.model;
 
-public class GetZoneResponse {
+public class ZoneResponse {
     private Zone Zone;
 
     public Zone getZone() {

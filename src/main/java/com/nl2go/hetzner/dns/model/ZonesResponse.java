@@ -2,7 +2,7 @@ package com.nl2go.hetzner.dns.model;
 
 import java.util.ArrayList;
 
-public class GetZonesResponse {
+public class ZonesResponse {
     Meta Meta;
 
     ArrayList<Zone> zones = new ArrayList<>();

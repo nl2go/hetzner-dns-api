@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HetznerDnsApiUnitTest {
+public class HetznerDnsApiZonesTest {
 
     private static final String ZONEID = "AhywbURnqpPifOAZww91";
 
@@ -91,7 +92,7 @@ public class HetznerDnsApiUnitTest {
 
         stubFor(get(urlEqualTo(format("/zones/{0}", notExistingZoneId)))
                 .withHeader("Auth-API-Token", equalTo(authApiToken))
-                .willReturn(aResponse().withStatus(404)));
+                .willReturn(aResponse().withStatus(HttpStatus.NOT_FOUND.value())));
 
         Zone zone = hetznerDNSApiService.getZoneById(notExistingZoneId);
 

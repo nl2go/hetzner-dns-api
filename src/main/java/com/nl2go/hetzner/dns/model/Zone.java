@@ -18,7 +18,7 @@ public class Zone {
     private int recordsCount;
     private String registrar;
     private String status;
-    private float ttl;
+    private int ttl;
     private TxtVerification TxtVerificationObject;
     private String verified;
     private ZoneType ZoneTypeObject;
@@ -143,11 +143,11 @@ public class Zone {
         this.status = status;
     }
 
-    public float getTtl() {
+    public int getTtl() {
         return ttl;
     }
 
-    public void setTtl(float ttl) {
+    public void setTtl(int ttl) {
         this.ttl = ttl;
     }
 

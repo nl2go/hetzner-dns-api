@@ -1,9 +1,7 @@
 package com.nl2go.hetzner.dns.service.impl;
 
 import com.nl2go.hetzner.dns.client.HetznerDnsApiClient;
-import com.nl2go.hetzner.dns.model.GetZoneResponse;
-import com.nl2go.hetzner.dns.model.GetZonesResponse;
-import com.nl2go.hetzner.dns.model.Zone;
+import com.nl2go.hetzner.dns.model.*;
 import com.nl2go.hetzner.dns.service.HetznerDnsApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +16,8 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
 
     @Override
     public List<Zone> getZones() {
-        GetZonesResponse zonesResponse = new GetZonesResponse();
-        GetZonesResponse zonesResponseResult = hetznerDnsApiClient.getZones();
+        ZonesResponse zonesResponse = new ZonesResponse();
+        ZonesResponse zonesResponseResult = hetznerDnsApiClient.getZones();
 
         if (zonesResponseResult != null) {
             zonesResponse = zonesResponseResult;
@@ -30,14 +28,54 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
 
     @Override
     public Zone getZoneById(String id) {
-        GetZoneResponse zoneResponse = new GetZoneResponse();
-        GetZoneResponse zoneResponseResult = hetznerDnsApiClient.getZoneById(id);
+        ZoneResponse zoneResponse = new ZoneResponse();
+        ZoneResponse zoneResponseResult = hetznerDnsApiClient.getZoneById(id);
 
         if (zoneResponseResult != null) {
             zoneResponse = zoneResponseResult;
         }
 
         return zoneResponse.getZone();
+    }
+
+    @Override
+    public ZoneResponse postZoneById(ZoneInput input, String zoneId) {
+        return null;
+    }
+
+    @Override
+    public ZoneResponse putZoneById(ZoneInput input, String zoneId) {
+        return null;
+    }
+
+    @Override
+    public void deleteZoneById(String zoneId) {
+
+    }
+
+    @Override
+    public RecordsResponse getRecords() {
+        return null;
+    }
+
+    @Override
+    public RecordResponse getRecordById(String recordId) {
+        return null;
+    }
+
+    @Override
+    public RecordResponse postRecordById(RecordInput input, String recordId) {
+        return null;
+    }
+
+    @Override
+    public RecordResponse putRecordById(RecordInput input, String recordId) {
+        return null;
+    }
+
+    @Override
+    public void deleteRecordById(String recordId) {
+
     }
 }
 

@@ -5,7 +5,7 @@ import com.nl2go.hetzner.dns.exception.NotFoundException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 
-public class CustomErrorDecoder implements ErrorDecoder {
+public class HetznerDnsApiErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String methodKey, Response response) {
 
