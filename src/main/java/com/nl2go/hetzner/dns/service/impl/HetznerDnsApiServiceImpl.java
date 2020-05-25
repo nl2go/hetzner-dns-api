@@ -18,9 +18,9 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
     }
 
     @Override
-    public Zone getZoneById(String id) {
+    public Zone getZoneById(String zoneId) {
         ZoneResponse zoneResponse = new ZoneResponse();
-        ZoneResponse zoneResponseResult = hetznerDnsApiClient.getZoneById(id);
+        ZoneResponse zoneResponseResult = hetznerDnsApiClient.getZoneById(zoneId);
 
         if (zoneResponseResult != null) {
             zoneResponse = zoneResponseResult;
@@ -51,7 +51,14 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
 
     @Override
     public Record getRecordById(String recordId) {
-        return null;
+        RecordResponse recordResponse = new RecordResponse();
+        RecordResponse recordResponseResult = hetznerDnsApiClient.getRecordById(recordId);
+
+        if (recordResponseResult != null) {
+            recordResponse = recordResponseResult;
+        }
+
+        return recordResponse.getRecord();
     }
 
     @Override

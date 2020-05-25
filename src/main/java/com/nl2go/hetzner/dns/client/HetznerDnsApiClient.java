@@ -26,7 +26,6 @@ public interface HetznerDnsApiClient {
     ZoneResponse putZoneById(@RequestBody ZoneInput input, @PathVariable("zoneId") String zoneId);
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/zones/{zoneId}", produces = "application/json")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteZoneById(@PathVariable("zoneId") String zoneId);
 
     @RequestMapping(method = RequestMethod.GET, value = "/records")
@@ -42,6 +41,5 @@ public interface HetznerDnsApiClient {
     RecordResponse putRecordById(@RequestBody RecordInput input, @PathVariable("recordId") String recordId);
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/records/{recordId}", produces = "application/json")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteRecordById(@PathVariable("recordId") String recordId);
 }

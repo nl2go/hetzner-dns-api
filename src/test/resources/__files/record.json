@@ -1,0 +1,11 @@
+{
+  "record": {
+    "created": "2020-04-07 01:25:17 +0000 UTC",
+    "id": "random124",
+    "modified": "2020-04-07 01:25:17 +0000 UTC",
+    "name": "subdomain-test",
+    "type": "A",
+    "value": "127.0.0.222",
+    "zone_id": "AhywbURnqpPifOAZww91"
+  }
+}

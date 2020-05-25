@@ -18,12 +18,13 @@ import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static java.text.MessageFormat.format;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class HetznerDnsApiRecordsTest {
+
+    private static final String RECORDID = "random124";
 
     private static final String ZONEID = "AhywbURnqpPifOAZww91";
 
@@ -56,16 +57,49 @@ public class HetznerDnsApiRecordsTest {
     }
 
     @Test
-    public void GetZoneWithIdReturns404WhenZoneDoesNotExist() {
+    public void GetRecordsReturnsListGreaterThanZero() {
 
-        String notExistingZoneId = "DoesNotExist";
+        stubFor(get(urlEqualTo("/records"))
+                .withHeader("Auth-API-Token", equalTo(authApiToken))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withBodyFile("records.json")));
 
-        stubFor(get(urlEqualTo(format("/records/{0}", notExistingZoneId)))
+        List<Record> records = hetznerDNSApiService.getRecordsResponse().getRecords();
+
+        assertEquals(4, records.size());
+    }
+
+    @Test
+    public void GetRecordWithIdReturnsRecordWhenRecordExist() {
+
+        stubFor(get(urlEqualTo(format("/records/{0}", RECORDID)))
+                .withHeader("Auth-API-Token", equalTo(authApiToken))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withBodyFile("record.json")));
+
+        Record record = hetznerDNSApiService.getRecordById(RECORDID);
+
+        assertNotNull(record);
+
+        assertEquals(RECORDID, record.getId());
+        assertEquals(ZONEID, record.getZoneId());
+        assertEquals("subdomain-test", record.getName());
+        assertEquals("127.0.0.222", record.getValue());
+    }
+
+    @Test
+    public void GetRecordWithIdReturns404WhenRecordDoesNotExist() {
+
+        String notExistingRecordId = "DoesNotExist";
+
+        stubFor(get(urlEqualTo(format("/records/{0}", notExistingRecordId)))
                 .withHeader("Auth-API-Token", equalTo(authApiToken))
                 .willReturn(aResponse().withStatus(HttpStatus.NOT_FOUND.value())));
 
-        Zone zone = hetznerDNSApiService.getZoneById(notExistingZoneId);
+        Record record = hetznerDNSApiService.getRecordById(notExistingRecordId);
 
-        assertNull(zone);
+        assertNull(record);
     }
 }
