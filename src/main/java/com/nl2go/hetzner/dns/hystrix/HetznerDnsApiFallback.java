@@ -18,7 +18,7 @@ public class HetznerDnsApiFallback implements HetznerDnsApiClient {
     }
 
     @Override
-    public ZoneResponse postZoneById(ZoneInput input, String zoneId) {
+    public ZoneResponse postZone(ZoneInput input) {
         return null;
     }
 
@@ -43,7 +43,7 @@ public class HetznerDnsApiFallback implements HetznerDnsApiClient {
     }
 
     @Override
-    public RecordResponse postRecordById(RecordInput input, String recordId) {
+    public RecordResponse postRecord(RecordInput input) {
         return null;
     }
 

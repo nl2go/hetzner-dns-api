@@ -4,23 +4,23 @@ import com.nl2go.hetzner.dns.model.*;
 
 public interface HetznerDnsApiService {
 
-    ZonesResponse getZonesResponse();
+    ZonesResponse listZones();
 
-    Zone getZoneById(String zoneId);
+    Zone getZone(String zoneId);
 
-    Zone postZoneById(ZoneInput input, String zoneId);
+    Zone createZone(ZoneInput input);
 
-    Zone putZoneById(ZoneInput input, String zoneId);
+    Zone updateZone(ZoneInput input, String zoneId);
 
-    void deleteZoneById(String zoneId);
+    void deleteZone(String zoneId);
 
-    RecordsResponse getRecordsResponse();
+    RecordsResponse listRecords();
 
-    Record getRecordById(String recordId);
+    Record getRecord(String recordId);
 
-    Record postRecordById(RecordInput input, String recordId);
+    Record createRecord(RecordInput input);
 
-    Record putRecordById(RecordInput input, String recordId);
+    Record updateRecord(RecordInput input, String recordId);
 
-    void deleteRecordById(String recordId);
+    void deleteRecord(String recordId);
 }

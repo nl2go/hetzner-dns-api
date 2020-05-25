@@ -13,12 +13,12 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
     private HetznerDnsApiClient hetznerDnsApiClient;
 
     @Override
-    public ZonesResponse getZonesResponse() {
+    public ZonesResponse listZones() {
         return hetznerDnsApiClient.getZones();
     }
 
     @Override
-    public Zone getZoneById(String zoneId) {
+    public Zone getZone(String zoneId) {
         ZoneResponse zoneResponse = new ZoneResponse();
         ZoneResponse zoneResponseResult = hetznerDnsApiClient.getZoneById(zoneId);
 
@@ -30,27 +30,41 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
     }
 
     @Override
-    public Zone postZoneById(ZoneInput input, String zoneId) {
-        return null;
+    public Zone createZone(ZoneInput input) {
+        ZoneResponse zoneResponse = new ZoneResponse();
+        ZoneResponse zoneResponseResult = hetznerDnsApiClient.postZone(input);
+
+        if (zoneResponseResult != null) {
+            zoneResponse = zoneResponseResult;
+        }
+
+        return zoneResponse.getZone();
     }
 
     @Override
-    public Zone putZoneById(ZoneInput input, String zoneId) {
-        return null;
+    public Zone updateZone(ZoneInput input, String zoneId) {
+        ZoneResponse zoneResponse = new ZoneResponse();
+        ZoneResponse zoneResponseResult = hetznerDnsApiClient.putZoneById(input, zoneId);
+
+        if (zoneResponseResult != null) {
+            zoneResponse = zoneResponseResult;
+        }
+
+        return zoneResponse.getZone();
     }
 
     @Override
-    public void deleteZoneById(String zoneId) {
-
+    public void deleteZone(String zoneId) {
+        hetznerDnsApiClient.deleteZoneById(zoneId);
     }
 
     @Override
-    public RecordsResponse getRecordsResponse() {
+    public RecordsResponse listRecords() {
         return hetznerDnsApiClient.getRecords();
     }
 
     @Override
-    public Record getRecordById(String recordId) {
+    public Record getRecord(String recordId) {
         RecordResponse recordResponse = new RecordResponse();
         RecordResponse recordResponseResult = hetznerDnsApiClient.getRecordById(recordId);
 
@@ -62,18 +76,32 @@ public class HetznerDnsApiServiceImpl implements HetznerDnsApiService {
     }
 
     @Override
-    public Record postRecordById(RecordInput input, String recordId) {
-        return null;
+    public Record createRecord(RecordInput input) {
+        RecordResponse recordResponse = new RecordResponse();
+        RecordResponse recordResponseResult = hetznerDnsApiClient.postRecord(input);
+
+        if (recordResponseResult != null) {
+            recordResponse = recordResponseResult;
+        }
+
+        return recordResponse.getRecord();
     }
 
     @Override
-    public Record putRecordById(RecordInput input, String recordId) {
-        return null;
+    public Record updateRecord(RecordInput input, String recordId) {
+        RecordResponse recordResponse = new RecordResponse();
+        RecordResponse recordResponseResult = hetznerDnsApiClient.putRecordById(input, recordId);
+
+        if (recordResponseResult != null) {
+            recordResponse = recordResponseResult;
+        }
+
+        return recordResponse.getRecord();
     }
 
     @Override
-    public void deleteRecordById(String recordId) {
-
+    public void deleteRecord(String recordId) {
+        hetznerDnsApiClient.deleteZoneById(recordId);
     }
 }
 

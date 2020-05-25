@@ -2,6 +2,7 @@ package com.nl2go.hetzner.dns;
 
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
 import com.nl2go.hetzner.dns.model.Zone;
+import com.nl2go.hetzner.dns.model.ZoneInput;
 import com.nl2go.hetzner.dns.service.HetznerDnsApiService;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -40,7 +41,7 @@ public class HetznerDnsApiZonesTest {
     }
 
     @Test
-    public void GetZonesReturnsEmptyList() {
+    public void getZonesReturnsEmptyList() {
 
         stubFor(get(urlEqualTo("/zones"))
                 .withHeader("Auth-API-Token", equalTo(authApiToken))
@@ -48,13 +49,13 @@ public class HetznerDnsApiZonesTest {
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("zones_empty.json")));
 
-        List<Zone> zones = hetznerDNSApiService.getZonesResponse().getZones();
+        List<Zone> zones = hetznerDNSApiService.listZones().getZones();
 
         assertEquals(0, zones.size());
     }
 
     @Test
-    public void GetZonesReturnsListGreaterThanZero() {
+    public void getZonesReturnsListGreaterThanZero() {
 
         stubFor(get(urlEqualTo("/zones"))
                 .withHeader("Auth-API-Token", equalTo(authApiToken))
@@ -62,13 +63,13 @@ public class HetznerDnsApiZonesTest {
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("zones.json")));
 
-        List<Zone> zones = hetznerDNSApiService.getZonesResponse().getZones();
+        List<Zone> zones = hetznerDNSApiService.listZones().getZones();
 
         assertEquals(2, zones.size());
     }
 
     @Test
-    public void GetZoneWithIdReturnsZoneWhenZoneExist() {
+    public void getZoneWithIdReturnsZoneWhenZoneExist() {
 
         stubFor(get(urlEqualTo(format("/zones/{0}", ZONEID)))
                 .withHeader("Auth-API-Token", equalTo(authApiToken))
@@ -76,7 +77,7 @@ public class HetznerDnsApiZonesTest {
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("zone.json")));
 
-        Zone zone = hetznerDNSApiService.getZoneById(ZONEID);
+        Zone zone = hetznerDNSApiService.getZone(ZONEID);
 
         assertNotNull(zone);
 
@@ -86,7 +87,7 @@ public class HetznerDnsApiZonesTest {
     }
 
     @Test
-    public void GetZoneWithIdReturns404WhenZoneDoesNotExist() {
+    public void getZoneWithIdReturns404WhenZoneDoesNotExist() {
 
         String notExistingZoneId = "DoesNotExist";
 
@@ -94,8 +95,60 @@ public class HetznerDnsApiZonesTest {
                 .withHeader("Auth-API-Token", equalTo(authApiToken))
                 .willReturn(aResponse().withStatus(HttpStatus.NOT_FOUND.value())));
 
-        Zone zone = hetznerDNSApiService.getZoneById(notExistingZoneId);
+        Zone zone = hetznerDNSApiService.getZone(notExistingZoneId);
 
         assertNull(zone);
+    }
+
+    @Test
+    public void createZoneWithValidInputCreatesZone() {
+        stubFor(post(urlEqualTo("/zones"))
+                .withHeader("Auth-API-Token", equalTo(authApiToken))
+                .withRequestBody(equalToJson("{\"name\":\"hetzner-dns-test.de\",\"ttl\":86400}"))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withBodyFile("zone.json")));
+
+        ZoneInput zoneInput = getZoneInput();
+
+        Zone zone = hetznerDNSApiService.createZone(zoneInput);
+
+        assertEquals(ZONEID, zone.getId());
+        assertEquals("hetzner-dns-test.de", zone.getName());
+        assertEquals(86400, zone.getTtl());
+    }
+
+    @Test
+    public void updateZoneWithValidInputUpdatesZone() {
+        stubFor(put(urlEqualTo(format("/zones/{0}", ZONEID)))
+                .withHeader("Auth-API-Token", equalTo(authApiToken))
+                .withRequestBody(equalToJson("{\"name\":\"hetzner-dns-test.de\",\"ttl\":86400}"))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withBodyFile("zone.json")));
+
+        ZoneInput zoneInput = getZoneInput();
+
+        Zone zone = hetznerDNSApiService.updateZone(zoneInput, ZONEID);
+
+        assertEquals(ZONEID, zone.getId());
+        assertEquals("hetzner-dns-test.de", zone.getName());
+        assertEquals(86400, zone.getTtl());
+    }
+
+    @Test
+    public void deleteZoneWithValidIdDeletesZone() {
+        stubFor(delete(urlEqualTo(format("/zones/{0}", ZONEID)))
+                .withHeader("Auth-API-Token", equalTo(authApiToken))
+                .willReturn(aResponse().withStatus(HttpStatus.OK.value())));
+
+        hetznerDNSApiService.deleteZone(ZONEID);
+    }
+
+    private ZoneInput getZoneInput() {
+        ZoneInput zoneInput = new ZoneInput();
+        zoneInput.setName("hetzner-dns-test.de");
+        zoneInput.setTtl(86400);
+        return zoneInput;
     }
 }
