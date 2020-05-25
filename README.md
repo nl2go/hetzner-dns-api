@@ -19,7 +19,7 @@ public class CustomApp {
     private HetznerDnsApiService hetznerDNSApiService;
 
     public void getHetznerDNSZones() {
-        List<Zone> zones = hetznerDNSApiService.getZones();
+        List<Zone> zones = hetznerDNSApiService.listZones();
     }
 }
 ```
