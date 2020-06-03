@@ -7,6 +7,31 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>hetzner-dns-api</name>
     <description>Hetzner DNS API using OpenFeign</description>
+    
+    <url>https://github.com/nl2go/hetzner-dns-api</url>
+    
+    <licenses>
+        <license>
+            <name>The MIT License</name>
+            <url>https://raw.githubusercontent.com/nl2go/hetzner-dns-api/master/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:nl2go/hetzner-dns-api.git</connection>
+        <developerConnection>scm:git:git@github.com:nl2go/hetzner-dns-api.git</developerConnection>
+        <url>https://github.com/nl2go/hetzner-dns-api</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Dirk Pahl</name>
+            <email>dirk.pahl@web.de</email>
+            <url>https://github.com/dirkaholic</url>
+        </developer>
+    </developers>
 
     <dependencyManagement>
         <dependencies>
